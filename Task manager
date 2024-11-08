@@ -1,1 +1,91 @@
+import 'package:flutter/material.dart';
 
+void main() {
+  runApp(TaskManagerApp());
+}
+
+class TaskManagerApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Task Manager',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: TaskListScreen(),
+    );
+  }
+}
+
+class TaskListScreen extends StatefulWidget {
+  @override
+  _TaskListScreenState createState() => _TaskListScreenState();
+}
+
+class _TaskListScreenState extends State<TaskListScreen> {
+  final List<String> tasks = [];
+
+  void _addTask(String task) {
+    setState(() {
+      tasks.add(task);
+    });
+  }
+
+  void _removeTask(int index) {
+    setState(() {
+      tasks.removeAt(index);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Task Manager'),
+      ),
+      body: ListView.builder(
+        itemCount: tasks.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(tasks[index]),
+            trailing: IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () => _removeTask(index),
+            ),
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              String newTask = '';
+              return AlertDialog(
+                title: Text('Add New Task'),
+                content: TextField(
+                  onChanged: (value) {
+                    newTask = value;
+                  },
+                  decoration: InputDecoration(hintText: 'Enter task here'),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      if (newTask.isNotEmpty) {
+                        _addTask(newTask);
+                      }
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('Add'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+}
