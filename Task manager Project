@@ -1,0 +1,251 @@
+lib/
+  main.dart
+  UI/
+    Screen/
+      SplashScreen.dart
+      SignInScreen.dart
+      SingUpScreen.dart
+      Home_New_screen.dart
+      New_task_screen.dart
+      Profile_Screen.dart
+      Completed_screen.dart
+      Progress_screen.dart
+      Canceled_screen.dart
+    Widgets/
+      custom_button.dart
+      custom_textfield.dart
+  models/
+    task.dart
+  services/
+    auth_service.dart
+    task_service.dart
+
+
+#1 Main Dart:
+import 'package:flutter/material.dart';
+import 'UI/Screen/SplashScreen.dart';
+
+void main() {
+  runApp(TaskManagerApp());
+}
+
+class TaskManagerApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Task Manager',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: SplashScreen(),
+    );
+  }
+} 
+
+
+#2 Splashscreen Dart:
+import 'package:flutter/material.dart';
+import 'SignInScreen.dart';
+
+class SplashScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Task Manager',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignInScreen()),
+                );
+              },
+              child: Text('Get Started'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+} 
+
+
+#3 SignInScreen.dart:
+import 'package:flutter/material.dart';
+import 'Home_New_screen.dart';
+import '../Widgets/custom_textfield.dart';
+import '../Widgets/custom_button.dart';
+
+class SignInScreen extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Sign In')),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            CustomTextField(controller: emailController, hint: 'Email'),
+            SizedBox(height: 16),
+            CustomTextField(
+              controller: passwordController,
+              hint: 'Password',
+              isPassword: true,
+            ),
+            SizedBox(height: 20),
+            CustomButton(
+              text: 'Sign In',
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeNewScreen()),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+} 
+
+
+#4 HomeNewScreen:
+import 'package:flutter/material.dart';
+import 'New_task_screen.dart';
+import 'Profile_Screen.dart';
+
+class HomeNewScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.person),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
+              );
+            },
+          ),
+        ],
+      ),
+      body: Center(
+        child: Text('Welcome to Task Manager!'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => NewTaskScreen()),
+          );
+        },
+      ),
+    );
+  }
+} 
+
+
+#5 NewTaskScreen.dart:
+import 'package:flutter/material.dart';
+
+class NewTaskScreen extends StatelessWidget {
+  final TextEditingController taskController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Add New Task')),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: taskController,
+              decoration: InputDecoration(labelText: 'Task Title'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                if (taskController.text.isNotEmpty) {
+                  // Save Task Logic
+                  Navigator.pop(context);
+                }
+              },
+              child: Text('Add Task'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+} 
+
+#6 ProfileScreen.dart:
+import 'package:flutter/material.dart';
+
+class ProfileScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Profile')),
+      body: Center(
+        child: Text('User Profile Screen'),
+      ),
+    );
+  }
+} 
+
+#7 custom_textfield.dart:
+import 'package:flutter/material.dart';
+
+class CustomTextField extends StatelessWidget {
+  final TextEditingController controller;
+  final String hint;
+  final bool isPassword;
+
+  CustomTextField({required this.controller, required this.hint, this.isPassword = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      obscureText: isPassword,
+      decoration: InputDecoration(
+        labelText: hint,
+        border: OutlineInputBorder(),
+      ),
+    );
+  }
+} 
+
+#8 Custom_button.dart: 
+import 'package:flutter/material.dart';
+
+class CustomButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+
+  CustomButton({required this.text, required this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      child: Text(text),
+    );
+  }
+} 
