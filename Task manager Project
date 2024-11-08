@@ -209,7 +209,137 @@ class ProfileScreen extends StatelessWidget {
   }
 } 
 
-#7 custom_textfield.dart:
+#7 Completed_screen.dart:
+import 'package:flutter/material.dart';
+
+class CompletedScreen extends StatelessWidget {
+  final List<String> completedTasks;
+
+  // Constructor to pass completed tasks
+  CompletedScreen({required this.completedTasks});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Completed Tasks'),
+      ),
+      body: completedTasks.isEmpty
+          ? Center(
+              child: Text(
+                'No completed tasks yet!',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              ),
+            )
+          : ListView.builder(
+              itemCount: completedTasks.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: ListTile(
+                    title: Text(
+                      completedTasks[index],
+                      style: TextStyle(
+                        decoration: TextDecoration.lineThrough,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+    );
+  }
+} 
+
+
+#8 Progress_screen.dart:
+import 'package:flutter/material.dart';
+
+class ProgressScreen extends StatelessWidget {
+  final List<String> inProgressTasks;
+
+  // Constructor to accept the list of in-progress tasks
+  ProgressScreen({required this.inProgressTasks});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('In-Progress Tasks'),
+      ),
+      body: inProgressTasks.isEmpty
+          ? Center(
+              child: Text(
+                'No tasks in progress!',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              ),
+            )
+          : ListView.builder(
+              itemCount: inProgressTasks.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: ListTile(
+                    leading: Icon(Icons.work, color: Colors.orange),
+                    title: Text(
+                      inProgressTasks[index],
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                );
+              },
+            ),
+    );
+  }
+} 
+
+#9 Canceled_screen.dart:
+import 'package:flutter/material.dart';
+
+class CanceledScreen extends StatelessWidget {
+  final List<String> canceledTasks;
+
+  // Constructor to accept the list of canceled tasks
+  CanceledScreen({required this.canceledTasks});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Canceled Tasks'),
+      ),
+      body: canceledTasks.isEmpty
+          ? Center(
+              child: Text(
+                'No canceled tasks!',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+              ),
+            )
+          : ListView.builder(
+              itemCount: canceledTasks.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: ListTile(
+                    leading: Icon(Icons.cancel, color: Colors.red),
+                    title: Text(
+                      canceledTasks[index],
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.red,
+                        decoration: TextDecoration.lineThrough,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+    );
+  }
+} 
+
+#10 custom_textfield.dart:
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -232,7 +362,7 @@ class CustomTextField extends StatelessWidget {
   }
 } 
 
-#8 Custom_button.dart: 
+#11 Custom_button.dart: 
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
